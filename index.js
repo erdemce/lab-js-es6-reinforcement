@@ -5,8 +5,9 @@
 const getFirstNames = arr => {
   const userFirstNames = [];
   for (let user of arr) {
-    // Your code goes here ...
+    userFirstNames.push(user.firstName)
   }
+  return userFirstNames;
 };
 
 getFirstNames(usersArray);

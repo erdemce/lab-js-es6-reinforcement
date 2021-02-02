@@ -19,7 +19,11 @@ getFirstNames(usersArray);
 // ***************************************************************************
 
 const getFullNames = arr => {
-  // Your code goes here ...
+  const userAllNames = [];
+  for (let user of arr) {
+    userAllNames.push(`$(user.firstName) $(user.lastName)`)
+  }
+  return userAllNames;
 };
 
 getFullNames(usersArray);
@@ -32,10 +36,17 @@ getFullNames(usersArray);
 // ***************************************************************************
 
 const getUsersCreditDetails = arr => {
-  // Your code goes here ...
+  const userCreditDetails = [];
+
+  for(let user of arr){
+    let{firstName,lastName,balance}=user   
+    userCreditDetails.push({firstName,lastName,balance});
+  }
+  return userCreditDetails
 };
 
 getUsersCreditDetails(usersArray);
+
 // expected output:
 // [ { firstName: 'Kirby', lastName: 'Doyle', balance: '$3,570.06' },
 // { firstName: 'Tracie', lastName: 'May', balance: '$1,547.73' },
@@ -50,7 +61,10 @@ getUsersCreditDetails(usersArray);
 // ***************************************************************************
 
 const genderView = users => {
-  // Your code goes here ...
+
+  let femaleUsers=getFullNames(users).filter(user=>user.gender=="female")
+  let maleUsers=getFullNames(users).filter(user=>user.gender=="male")
+  return {femaleUsers,maleUsers}
 };
 
 genderView(usersArray);
@@ -67,7 +81,8 @@ genderView(usersArray);
 const data = genderView(usersArray);
 
 const genderCount = data => {
-  // Your code goes here ...
+  console.log("Female: "+data.femaleUsers.length)
+  console.log("Male: "+data.maleUsers.length)
 };
 
 genderCount(data);
@@ -79,9 +94,30 @@ genderCount(data);
 // Bonus - Iteration 6
 // ***************************************************************************
 
+//as a helper function
+function changeAsInteger(str){
+  let newStr=""
+  let arr=["$",",","."];
+  
+  for(let i=0;i<str.length;i++){
+    if(!arr.includes(str[i])){
+      newStr=newStr+str[i]
+    }
+    
+  }
+  return parseInt(newStr)/100
+} 
 const promo20 = users => {
-  // Your code goes here ...
+  let myArr=getUsersCreditDetails(users)
+  .filter(user=>changeAsInteger(user.balance)>20000)
+  .forEach(user=>console.log(`Dear ${user.firstName}, since your balance is
+  ${user.balance}, you are eligible to apply for this awesome credit card.`)
+    )
 };
+
+promo20(usersArray)
+
+
 
 // expected output:
 // Dear Howard, since your balance is $21,307.75, you are eligible to apply for this awesome credit card.
@@ -90,12 +126,24 @@ const promo20 = users => {
 // ***************************************************************************
 // Bonus - Iteration 7
 // ***************************************************************************
+/*
+Bonus - Iteration 7
+Create a function addActive() which should loop through the usersArray and add 
+a new property isActive with a value true to all users (hint: each user in the
+  usersArray is represented with object and you could use ... with objects 😉 ).
 
+Check the index.js to see what should be expected output.*/
+
+//we could not do it by using spread operator but we can do it in another way
 const addActive = users => {
-  // Your code goes here ...
+  let newUsers=users.map(user=>user)
+  newUsers.forEach(user=>{
+    user.isActive=true;
+  })
+  return newUsers;
 };
 
-addActive(usersArray);
+console.log(addActive(usersArray));
 // expected output:
 // [
 //    { firstName: 'Kirby',
